@@ -1,0 +1,56 @@
+version: 1
+send_anonymous_usage_stats: true
+project_id: "tap-apple-search-ads"
+default_environment: test
+environments:
+- name: test
+plugins:
+  extractors:
+  - name: "tap-apple-search-ads"
+    namespace: "tap_apple_search_ads"
+    pip_url: -e .
+    capabilities:
+    - state
+    - catalog
+    - discover
+    - about
+    - stream-maps
+
+    # TODO: Declare settings and their types here:
+    settings:
+    - name: client_id
+      label: Client ID
+      kind: password
+      description: The client id to authenticate against the API service
+      sensitive: true
+
+    - name: client_secret
+      label: Client Secret
+      kind: password
+      description: The client secret to authenticate against the API service
+      sensitive: true
+
+    - name: org_id
+      label: Organisation ID
+      kind: string
+      description: The organisation id in your apple search ads
+
+    - name: start_date
+      kind: date_iso8601
+      label: Start Date
+      description: Initial date to start extracting data from
+
+    # TODO: Declare required settings here:
+    settings_group_validation:
+    - [username, password]
+
+    # TODO: Declare default configuration values here:
+    config:
+      client_id: "SEARCHADS.ab7e8346-97a6-4b70-877b-c5c494ceafc0"
+      client_secret: "eyJhbGciOiJFUzI1NiIsImtpZCI6IjY5OTQxNTIyLTdkMjUtNGMwNy1iYmZkLTQ3YjQwOThjMDAxNyIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTRUFSQ0hBRFMuYWI3ZTgzNDYtOTdhNi00YjcwLTg3N2ItYzVjNDk0Y2VhZmMwIiwiYXVkIjoiaHR0cHM6Ly9hcHBsZWlkLmFwcGxlLmNvbSIsImlhdCI6MTcyMjQ5MTczNSwiZXhwIjoxNzM4MDQzNzM1LCJpc3MiOiJTRUFSQ0hBRFMuYWI3ZTgzNDYtOTdhNi00YjcwLTg3N2ItYzVjNDk0Y2VhZmMwIn0.R8Wf9hIskDkxItzKB2gGoHb3wM08TUoy9N3FpZpsEGl_BfDZGVheUx7Qk0XW3ppSzZlnteX5j1JdTOc7TnZfxA"
+      org_id: "1227480"
+
+  loaders:
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
